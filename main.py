@@ -3,6 +3,8 @@ import os
 from dotenv import load_dotenv
 from telebot.types import Message , ReplyKeyboardMarkup , InlineKeyboardButton , InlineKeyboardMarkup
 from text import help_unit , help_base
+from transmuter import define_calculate
+from transmuter_base import define_calculate_base
 
 
 #load token and use
@@ -44,8 +46,9 @@ def convering(message:Message):
     elif message.text == "Base":
         help_for_base = InlineKeyboardButton('help' , callback_data='base_btn')
         markup_base = InlineKeyboardMarkup().add(help_for_base)
-        bot.send_message(message.chat.id , f'🔢 Enter a number with its base, like 1010 b or 1F h',reply_markup=markup_base)
         
+        bot.send_message(message.chat.id , f'🔢 Enter a number with its base, like 1010 b or 1F h',reply_markup=markup_base)
+
         bot.register_next_step_handler(message , base_func)
         
         
@@ -62,15 +65,15 @@ def convering(message:Message):
 """)
     elif message.text == 'Gregorian':
         bot.send_message(message.chat.id , 'Enter Date Gregorian📅 :') 
-        bot.register_next_step_handler(message , gregorian_func)
+        bot.register_next_step_handler(message )
         
     elif message.text == 'Persian':
         bot.send_message(message.chat.id , 'Enter Date Persian🌞 :') 
-        bot.register_next_step_handler(message , persian_func)
+        bot.register_next_step_handler(message )
         
     elif message.text == 'Islamic':
         bot.send_message(message.chat.id , 'Enter Date Islamic🌙 :') 
-        bot.register_next_step_handler(message , islamic_func)
+        bot.register_next_step_handler(message )
         
     elif message.text == 'back':
         bot.send_message(message.chat.id , '📍 Main Menu' , reply_markup = key_markup)
@@ -78,7 +81,12 @@ def convering(message:Message):
         bot.send_message(message.chat.id , f'⚠️ Invalid input type.')
 
 
-
+def unit_func(message : Message):
+    result = define_calculate(message.text)
+    bot.reply_to(message , result , reply_markup=key_markup)
+def base_func(message : Message):
+    result = define_calculate_base(message.text)
+    bot.reply_to(message , result,reply_markup=key_markup)
         
       
 bot.polling(
