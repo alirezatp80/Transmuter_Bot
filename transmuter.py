@@ -444,4 +444,3 @@ def define_calculate(string:str):
     else:
         return "Unknown unit! Check your input or use help_unit"
     
-print(define_calculate('10 C'))

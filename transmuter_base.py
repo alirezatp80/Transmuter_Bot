@@ -41,5 +41,24 @@ def Base(usr_input:str):
 
 
 
-for i in Base('1203 d'):
-    print(i)
+def get_string(list:list):
+    result = ''
+    for i in list:
+        result=result+i+'\n'
+    return result
+    
+def define_calculate_base(string:str):
+    num , base = string.split(' ')
+    unit = base.strip().lower()
+    
+    if unit in ['b', 'o', 'd','hx']:
+        
+        return get_string(Base(string))
+
+   
+   
+
+    else:
+        return "Unknown unit! Check your input or use help_base"
+    
+print(define_calculate_base('100001101 b'))
