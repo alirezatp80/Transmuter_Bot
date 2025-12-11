@@ -1,7 +1,7 @@
 help_unit = """
 🌡️ Temperature Units:
-  • Celsius (°C)
-  • Fahrenheit (°F)
+  • Celsius (C)
+  • Fahrenheit (F)
   • Kelvin (K)
 
 📏 Length Units:
@@ -26,6 +26,7 @@ help_unit = """
   • Liter (L)
   • Milliliter (mL)
   • Cubic Meter (m3)
+  • Cubic Centimeter(cm3)
   • Gallon (gal)
 
 💨 Speed Units:
@@ -54,5 +55,5 @@ help_base = """
   • Binary (base 2) — 0b -> 1011 b
   • Octal (base 8) — 0o -> 14 o
   • Decimal (base 10) — 0d -> 12 d
-  • Hexadecimal (base 16) — 0x -> 2F x
+  • Hexadecimal (base 16) — 0x -> 2F hx
 """

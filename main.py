@@ -37,12 +37,17 @@ def convering(message:Message):
         markup_unit = InlineKeyboardMarkup().add(help_for_unit)
         bot.send_message(message.chat.id , f'📏 Enter a value with its unit, like 20 km',reply_markup=markup_unit)
         
+        bot.register_next_step_handler(message , unit_func)
+        
         
         
     elif message.text == "Base":
         help_for_base = InlineKeyboardButton('help' , callback_data='base_btn')
         markup_base = InlineKeyboardMarkup().add(help_for_base)
         bot.send_message(message.chat.id , f'🔢 Enter a number with its base, like 1010 b or 1F h',reply_markup=markup_base)
+        
+        bot.register_next_step_handler(message , base_func)
+        
         
 
     elif message.text == 'Date' :
@@ -57,10 +62,16 @@ def convering(message:Message):
 """)
     elif message.text == 'Gregorian':
         bot.send_message(message.chat.id , 'Enter Date Gregorian📅 :') 
+        bot.register_next_step_handler(message , gregorian_func)
+        
     elif message.text == 'Persian':
         bot.send_message(message.chat.id , 'Enter Date Persian🌞 :') 
+        bot.register_next_step_handler(message , persian_func)
+        
     elif message.text == 'Islamic':
         bot.send_message(message.chat.id , 'Enter Date Islamic🌙 :') 
+        bot.register_next_step_handler(message , islamic_func)
+        
     elif message.text == 'back':
         bot.send_message(message.chat.id , '📍 Main Menu' , reply_markup = key_markup)
     else:
