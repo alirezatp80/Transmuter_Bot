@@ -328,29 +328,21 @@ def Time(usr_input:str):
         final.append(f"⏱️ {format_num(num)} {unit} = {format_num(val)} {u}")
     return final
 
-def Time(usr_input:str):
+def Data(usr_input:str):
     num , unit = usr_input.split(' ')
     num = float(num)
-    unit = unit.strip().lower()
-    if unit == 'B':
+    unit = unit.strip()
+    if unit == 'b':  
         output = {
-            'b': num * 8,
-            'B': num,
-            'KB': num / 1024,
-            'MB': num / (1024**2),
-            'GB': num / (1024**3),
-            'TB': num / (1024**4)
+            'b': num,              
+            'B': num / 8,          
+            'KB': num / (8*1024),
+            'MB': num / (8*1024**2),
+            'GB': num / (8*1024**3),
+            'TB': num / (8*1024**4)
         }
-    elif unit == 'B':
-        output = {
-            'b': num * 8,
-            'B': num,
-            'KB': num / 1024,
-            'MB': num / (1024**2),
-            'GB': num / (1024**3),
-            'TB': num / (1024**4)
-        }
-    elif unit == 'KB':
+    
+    elif unit.lower() == 'kb':
         output = {
             'b': num * 1024 * 8,
             'B': num * 1024,
@@ -359,7 +351,7 @@ def Time(usr_input:str):
             'GB': num / (1024**2),
             'TB': num / (1024**3)
         }
-    elif unit == 'MB':
+    elif unit.lower() == 'mb':
         output = {
             'b': num * 1024**2 * 8,
             'B': num * 1024**2,
@@ -368,7 +360,7 @@ def Time(usr_input:str):
             'GB': num / 1024,
             'TB': num / (1024**2)
         }
-    elif unit == 'GB':
+    elif unit.lower() == 'gb':
         output = {
             'b': num * 1024**3 * 8,
             'B': num * 1024**3,
@@ -377,7 +369,7 @@ def Time(usr_input:str):
             'GB': num,
             'TB': num / 1024
         }
-    elif unit == 'TB':
+    elif unit.lower() == 'tb':
         output = {
             'b': num * 1024**4 * 8,
             'B': num * 1024**4,
@@ -402,7 +394,54 @@ def Time(usr_input:str):
     for u, val in output.items():
         final.append(f"🧠 {format_num(num)} {unit} = {format_num(val)} {u}")
     return final
-       
+
+def get_string(list:list):
+    result = ''
+    for i in list:
+        result=result+i+'\n'
+    return result
     
-for i in Volume('2 ML'):
-    print(i)
+def define_calculate(string:str):
+    num , unit = string.split(' ')
+    unit = unit.strip()
+    
+    if unit in ['C', 'F', 'K']:
+        
+        return get_string(Temperature(string))
+
+    # Length
+    elif unit.lower() in ['m','km','cm','mm','mi','yd','ft','in']:
+        
+        return get_string(Length(string))
+
+    # Weight / Mass
+    elif unit.lower() in ['g','kg','mg','lb','oz']:
+       
+         return get_string(Weight(string))
+
+    # Volume
+    elif unit.lower() in ['l','ml','m3','cm3','gal']:
+        
+         return get_string(Volume(string))
+
+    # Speed
+    elif unit.lower() in ['m/s','km/h','mph']:
+        
+         return get_string(Speed(string))
+
+    # Time
+    elif unit.lower() in ['s','min','h','d']:
+        
+         return get_string(Time(string))
+
+    # Data
+    elif unit in ['b','B','KB','MB','GB','TB']:
+        
+         return get_string(Data(string))
+
+   
+
+    else:
+        return "Unknown unit! Check your input or use help_unit"
+    
+print(define_calculate('10 C'))
