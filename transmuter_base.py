@@ -61,4 +61,3 @@ def define_calculate_base(string:str):
     else:
         return "Unknown unit! Check your input or use help_base"
     
-print(define_calculate_base('100001101 b'))
