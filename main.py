@@ -37,7 +37,7 @@ def convering(message:Message):
     if message.text == 'Unit':
         help_for_unit = InlineKeyboardButton('help' , callback_data='unit_btn')
         markup_unit = InlineKeyboardMarkup().add(help_for_unit)
-        bot.send_message(message.chat.id , f'📏 Enter a value with its unit, like 20 km',reply_markup=markup_unit)
+        bot.send_message(message.chat.id , f'📏 Enter a value with its unit,like 20 km',reply_markup=markup_unit)
         
         bot.register_next_step_handler(message , unit_func)
         
@@ -47,7 +47,7 @@ def convering(message:Message):
         help_for_base = InlineKeyboardButton('help' , callback_data='base_btn')
         markup_base = InlineKeyboardMarkup().add(help_for_base)
         
-        bot.send_message(message.chat.id , f'🔢 Enter a number with its base, like 1010 b or 1F h',reply_markup=markup_base)
+        bot.send_message(message.chat.id , f'🔢 Enter a number with its base, like 1010 b or 1F hx',reply_markup=markup_base)
 
         bot.register_next_step_handler(message , base_func)
         
@@ -77,6 +77,7 @@ def convering(message:Message):
         
     elif message.text == 'back':
         bot.send_message(message.chat.id , '📍 Main Menu' , reply_markup = key_markup)
+    
     else:
         bot.send_message(message.chat.id , f'⚠️ Invalid input type.')
 
