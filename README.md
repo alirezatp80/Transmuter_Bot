@@ -12,3 +12,8 @@
 2. Install dependencies:  
    ```bash
    pip install pyTelegramBotAPI
+   pip install dotenv
+
+## help 
+1. make virtual env and pip packages
+2. Create a `.env` file by copying `.env.example` and fill in all required values.
