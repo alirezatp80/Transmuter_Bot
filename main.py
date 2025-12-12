@@ -64,7 +64,9 @@ def convering(message:Message):
         
 
     elif message.text == 'Date' :
-        date_btn.add('Gregorian', 'Persian' , 'Islamic' , 'back')
+        if date_btn.keyboard == []:
+            date_btn.add('Gregorian', 'Persian' , 'Islamic' , 'back')
+        
         bot.send_message(message.chat.id , f'📅 Choose the input calendar' , reply_markup=date_btn)
 
     elif message.text == 'About' :
@@ -73,18 +75,24 @@ def convering(message:Message):
 📧 Email: alirezatd80@gmail.com
 """)
     elif message.text == 'Gregorian':
-        bot.send_message(message.chat.id , 'Enter Date Gregorian📅 :') 
+        back_btn = ReplyKeyboardMarkup(resize_keyboard=True)
+        back_btn.add('Back')
+        bot.send_message(message.chat.id , 'Enter Date Gregorian📅 :',reply_markup=back_btn) 
         
         bot.register_next_step_handler(message , Gregorian_date_func)
         
     elif message.text == 'Persian':
-        bot.send_message(message.chat.id , 'Enter Date Persian🌞 :') 
+        back_btn = ReplyKeyboardMarkup(resize_keyboard=True)
+        back_btn.add('Back')
+        bot.send_message(message.chat.id , 'Enter Date Persian🌞 :',reply_markup=back_btn) 
         
         bot.register_next_step_handler(message , Persian_date)
         
         
     elif message.text == 'Islamic':
-        bot.send_message(message.chat.id , 'Enter Date Islamic🌙 :') 
+        back_btn = ReplyKeyboardMarkup(resize_keyboard=True)
+        back_btn.add('Back')
+        bot.send_message(message.chat.id , 'Enter Date Islamic🌙 :',reply_markup=back_btn) 
         
         bot.register_next_step_handler(message , Islamic_date)
         
@@ -127,8 +135,8 @@ def Gregorian_date_func(message : Message):
         bot.delete_message(message.chat.id , message.message_id)
         bot.send_message(
             message.chat.id,
-            '📍 Returned to main menu.',
-            reply_markup=key_markup
+            '📍 Returned to Date menu.',
+            reply_markup=date_btn
         )
         return
     else:
@@ -141,8 +149,8 @@ def Persian_date(message : Message):
         bot.delete_message(message.chat.id , message.message_id)
         bot.send_message(
             message.chat.id,
-            '📍 Returned to main menu.',
-            reply_markup=key_markup
+            '📍Returned to Date menu.',
+            reply_markup=date_btn
         )
         return
     else:
@@ -153,8 +161,8 @@ def Islamic_date(message : Message):
         bot.delete_message(message.chat.id , message.message_id)
         bot.send_message(
             message.chat.id,
-            '📍 Returned to main menu.',
-            reply_markup=key_markup
+            '📍 Returned to Date menu.',
+            reply_markup=date_btn
         )
         return
     else:
