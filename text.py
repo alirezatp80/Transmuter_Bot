@@ -110,3 +110,38 @@ base_page = """
 
 I'm ready! ✨
 """
+date_page = """
+📅 Please enter the date in the selected calendar.
+
+🔹 Supported calendars:
+• Gregorian  → میلادی
+• Persian    → شمسی
+• Islamic    → هجری قمری
+
+🔹 ✅ Correct examples:
+For Gregorian:
+• 2024-12-01
+• 1998-07-15
+
+For Persian:
+• 1402-05-20
+• 1399-01-01
+
+For Islamic:
+• 1445-09-10
+• 1430-01-01
+
+🔸 ❌ Incorrect examples:
+• 2024/12/01     (slashes not allowed)
+• 1402-13-40     (invalid month/day)
+• 15-07-2020     (wrong order)
+• just “2024”    (incomplete)
+
+📝 Format rule:
+YYYY-MM-DD  
+(Year – Month – Day)
+
+⏳ After entering the date, I will convert it to all other calendars automatically.
+
+I'm ready! ✨
+"""
