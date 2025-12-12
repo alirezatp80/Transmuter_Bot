@@ -5,6 +5,7 @@ from telebot.types import Message , ReplyKeyboardMarkup , InlineKeyboardButton ,
 from text import help_unit , help_base , unit_page,base_page
 from transmuter import define_calculate
 from transmuter_base import define_calculate_base
+from transmuter_date import Gregorian_date,Persian,Islamic
 
 
 #load token and use
@@ -17,6 +18,9 @@ bot = telebot.TeleBot(token=TOKEN)
 #button for app
 key_markup = ReplyKeyboardMarkup(resize_keyboard=True,row_width=2 )
 key_markup.add('Unit' , 'Base' , 'Date' , 'About')
+
+date_btn = ReplyKeyboardMarkup(resize_keyboard=True)
+
 
 
 @bot.callback_query_handler(func=lambda call:True)
@@ -60,7 +64,6 @@ def convering(message:Message):
         
 
     elif message.text == 'Date' :
-        date_btn = ReplyKeyboardMarkup(resize_keyboard=True)
         date_btn.add('Gregorian', 'Persian' , 'Islamic' , 'back')
         bot.send_message(message.chat.id , f'📅 Choose the input calendar' , reply_markup=date_btn)
 
@@ -71,17 +74,22 @@ def convering(message:Message):
 """)
     elif message.text == 'Gregorian':
         bot.send_message(message.chat.id , 'Enter Date Gregorian📅 :') 
-        bot.register_next_step_handler(message )
+        
+        bot.register_next_step_handler(message , Gregorian_date_func)
         
     elif message.text == 'Persian':
         bot.send_message(message.chat.id , 'Enter Date Persian🌞 :') 
-        bot.register_next_step_handler(message )
+        
+        bot.register_next_step_handler(message , Persian_date)
+        
         
     elif message.text == 'Islamic':
         bot.send_message(message.chat.id , 'Enter Date Islamic🌙 :') 
-        bot.register_next_step_handler(message )
+        
+        bot.register_next_step_handler(message , Islamic_date)
         
     elif message.text == 'back':
+        bot.delete_message(message.chat.id , message.message_id)
         bot.send_message(message.chat.id , '📍 Main Menu' , reply_markup = key_markup)
     
     else:
@@ -113,6 +121,45 @@ def base_func(message : Message):
         
         result = define_calculate_base(message.text)
         bot.reply_to(message , result,reply_markup=key_markup)
+
+def Gregorian_date_func(message : Message):
+    if message.text == 'Back':
+        bot.delete_message(message.chat.id , message.message_id)
+        bot.send_message(
+            message.chat.id,
+            '📍 Returned to main menu.',
+            reply_markup=key_markup
+        )
+        return
+    else:
+        result = Gregorian_date(message.text)
+        bot.reply_to(message , result , reply_markup =date_btn )
+        
+        
+def Persian_date(message : Message):
+    if message.text == 'Back':
+        bot.delete_message(message.chat.id , message.message_id)
+        bot.send_message(
+            message.chat.id,
+            '📍 Returned to main menu.',
+            reply_markup=key_markup
+        )
+        return
+    else:
+        result = Persian(message.text)
+        bot.reply_to(message , result , reply_markup =date_btn )
+def Islamic_date(message : Message):
+    if message.text == 'Back':
+        bot.delete_message(message.chat.id , message.message_id)
+        bot.send_message(
+            message.chat.id,
+            '📍 Returned to main menu.',
+            reply_markup=key_markup
+        )
+        return
+    else:
+        result = Islamic(message.text)
+        bot.reply_to(message , result , reply_markup =date_btn )
         
       
 bot.polling(
