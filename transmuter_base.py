@@ -9,10 +9,48 @@ def format_base(n, base):
     elif base == '16':
         return hex(n)[2:].upper() + ' hx'
     
+def validation_input(string:str):
+   while True:
+        try:
+            num , unit = string.split(' ')
+            num = num.strip()
+            unit = unit.strip()
+            return num , unit
+            
+        except:
+            return 'The input you entered is not valid','not valid'
+
+def valid_base(num, base):
+    if base == 'b':
+        for i in num:
+            if int(i)>1:
+                
+                raise Exception('base not correct!!!')
+    elif base == 'o':
+        for i in num:
+            if int(i)>7:
+                raise Exception('base not correct!!!')
+    elif base == 'd':
+        for i in num:
+            int(i)
+            
+    elif base == 'hx':
+       
+        for i in num :
+            if i not in  ['1','2','3','4','5','6','7','8','9','0','A','B','C','D','E','F']:
+                raise Exception('base not correct!!!')
+            
+def check_base(num , base) : 
+    try :
+        valid_base(num , base)
+        return num , base
+    except:
+        return 'the base is not correct!!' , "not valid"
+    
+    
 def Base(usr_input:str):
-    num , base = usr_input.split(' ')
-    num = num.strip()
-    base = base.strip()
+    num , base =validation_input(usr_input)
+    num , base = check_base(num , base)
     
     if base == 'b':
         decimal_num = int(num, 2)
@@ -48,10 +86,11 @@ def get_string(list:list):
     return result
     
 def define_calculate_base(string:str):
-    num , base = string.split(' ')
-    unit = base.strip().lower()
+    num , base =validation_input(string)
+    num , base = check_base(num , base)
+    base = base.lower()
     
-    if unit in ['b', 'o', 'd','hx']:
+    if base in ['b', 'o', 'd','hx']:
         
         return get_string(Base(string))
 
@@ -59,5 +98,5 @@ def define_calculate_base(string:str):
    
 
     else:
-        return "Unknown unit! Check your input or use help_base"
+        return "Unknown base! Check your input or use help_base"
     

@@ -1,12 +1,24 @@
 def format_num(n):
     return f"{n:,.10f}".rstrip("0").rstrip(".")
 
+def validation_input(string:str):
+   while True:
+        try:
+            num , unit = string.split(' ')
+            num = float(num)
+            unit = unit.strip()
+            return num , unit
+            
+        except:
+            return 'The input you entered is not valid','not valid'
+    
+
 
 #temperture
 def Temperature(usr_input:str):
-    num , unit = usr_input.split(' ')
-    num = float(num)
-    unit = unit.strip()
+    num , unit =validation_input(usr_input)
+    
+    
     if unit =='C':
         output = {
             'C' : num,
@@ -39,9 +51,8 @@ def Temperature(usr_input:str):
     
 #Length
 def Length(usr_input:str):
-    num , unit = usr_input.split(' ')
-    num = float(num)
-    unit = unit.strip().lower()
+    num , unit =validation_input(usr_input)
+    unit = unit.lower()
     if unit == 'm':
         output = {
             'm': num,
@@ -140,9 +151,8 @@ def Length(usr_input:str):
 
 
 def Weight(usr_input:str):
-    num , unit = usr_input.split(' ')
-    num = float(num)
-    unit = unit.strip().lower()
+    num , unit =validation_input(usr_input)
+    unit = unit.lower()
     if unit == 'g':
         output = {
             'g': num,
@@ -193,9 +203,8 @@ def Weight(usr_input:str):
     
     
 def Volume(usr_input:str):
-    num , unit = usr_input.split(' ')
-    num = float(num)
-    unit = unit.strip().lower()
+    num , unit =validation_input(usr_input)
+    unit = unit.lower()
     if unit == 'l' or unit == "L":
         output = {
             'L': num,
@@ -259,9 +268,8 @@ def Volume(usr_input:str):
     return final
 
 def Speed(usr_input:str):
-    num , unit = usr_input.split(' ')
-    num = float(num)
-    unit = unit.strip().lower()
+    num , unit =validation_input(usr_input)
+    unit = unit.lower()
     if unit == 'm/s':
         output = {
             'm/s': num,
@@ -289,9 +297,8 @@ def Speed(usr_input:str):
     return final
 
 def Time(usr_input:str):
-    num , unit = usr_input.split(' ')
-    num = float(num)
-    unit = unit.strip().lower()
+    num , unit =validation_input(usr_input)
+    unit = unit.lower()
     if unit == 's':
         output = {
             's': num,
@@ -329,9 +336,7 @@ def Time(usr_input:str):
     return final
 
 def Data(usr_input:str):
-    num , unit = usr_input.split(' ')
-    num = float(num)
-    unit = unit.strip()
+    num , unit =validation_input(usr_input)
     if unit == 'b':  
         output = {
             'b': num,              
@@ -402,8 +407,7 @@ def get_string(list:list):
     return result
     
 def define_calculate(string:str):
-    num , unit = string.split(' ')
-    unit = unit.strip()
+    num , unit =validation_input(string)
     
     if unit in ['C', 'F', 'K']:
         

@@ -2,7 +2,7 @@ import telebot
 import os
 from dotenv import load_dotenv
 from telebot.types import Message , ReplyKeyboardMarkup , InlineKeyboardButton , InlineKeyboardMarkup
-from text import help_unit , help_base
+from text import help_unit , help_base , unit_page,base_page
 from transmuter import define_calculate
 from transmuter_base import define_calculate_base
 
@@ -35,19 +35,25 @@ def say_hi(message : Message):
 @bot.message_handler()
 def convering(message:Message):
     if message.text == 'Unit':
+        back_btn = ReplyKeyboardMarkup(resize_keyboard=True)
+        back_btn.add('Back')
+        bot.send_message(message.chat.id , '🔄 You are now in Unit Conversion Mode', reply_markup=back_btn)
         help_for_unit = InlineKeyboardButton('help' , callback_data='unit_btn')
         markup_unit = InlineKeyboardMarkup().add(help_for_unit)
-        bot.send_message(message.chat.id , f'📏 Enter a value with its unit,like 20 km',reply_markup=markup_unit)
-        
+        bot.send_message(message.chat.id , f'{unit_page}',reply_markup=markup_unit)
+       
         bot.register_next_step_handler(message , unit_func)
         
         
         
     elif message.text == "Base":
+        back_btn = ReplyKeyboardMarkup(resize_keyboard=True)
+        back_btn.add('Back')
+        bot.send_message(message.chat.id , '🔄 You are now in Base Conversion Mode', reply_markup=back_btn)
         help_for_base = InlineKeyboardButton('help' , callback_data='base_btn')
         markup_base = InlineKeyboardMarkup().add(help_for_base)
         
-        bot.send_message(message.chat.id , f'🔢 Enter a number with its base, like 1010 b or 1F hx',reply_markup=markup_base)
+        bot.send_message(message.chat.id , f'{base_page}',reply_markup=markup_base)
 
         bot.register_next_step_handler(message , base_func)
         
@@ -79,15 +85,34 @@ def convering(message:Message):
         bot.send_message(message.chat.id , '📍 Main Menu' , reply_markup = key_markup)
     
     else:
-        bot.send_message(message.chat.id , f'⚠️ Invalid input type.')
+        bot.send_message(message.chat.id , f'⚠️ Invalid input type.choose a button')
 
 
 def unit_func(message : Message):
-    result = define_calculate(message.text)
-    bot.reply_to(message , result , reply_markup=key_markup)
+    if message.text == 'Back':
+            bot.delete_message(message.chat.id , message.message_id)
+            bot.send_message(
+                message.chat.id,
+                '📍 Returned to main menu.',
+                reply_markup=key_markup
+            )
+            return 
+    else:
+        result = define_calculate(message.text)
+        bot.reply_to(message , result , reply_markup=key_markup)
 def base_func(message : Message):
-    result = define_calculate_base(message.text)
-    bot.reply_to(message , result,reply_markup=key_markup)
+    if message.text == 'Back':
+            bot.delete_message(message.chat.id , message.message_id)
+            bot.send_message(
+                message.chat.id,
+                '📍 Returned to main menu.',
+                reply_markup=key_markup
+            )
+            return 
+    else:
+        
+        result = define_calculate_base(message.text)
+        bot.reply_to(message , result,reply_markup=key_markup)
         
       
 bot.polling(
