@@ -8,15 +8,42 @@ from transmuter_base import define_calculate_base
 from transmuter_date import Gregorian_date,Persian,Islamic
 import database
 import datetime
+import time
+import schedule
 
 
 #load token and use
 load_dotenv()
 TOKEN = os.getenv('API_TOKEN')
 
+
+        
+
 #CREATE BOT API
 bot = telebot.TeleBot(token=TOKEN)
 database.create_user_table()
+
+#send message to all 
+def send_message_toall():
+    users = database.select_all_users()
+    today = datetime.date.today()
+    date_message = Gregorian_date(str(today))
+    
+    for i in users:
+        try:
+            bot.send_message(int(i[0]) ,date_message )
+            time.sleep(0.5)
+        except Exception as e:
+            print(f'error to send message to {i[0]} \ndescription : {e}')
+            
+
+# هر روز ساعت 09:54:20 پیام ارسال می‌شود
+schedule.every().day.at("10:16:58").do(send_message_toall)
+
+def run_bot():
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
 
 #button for app
 key_markup = ReplyKeyboardMarkup(resize_keyboard=True,row_width=2 )
@@ -183,8 +210,10 @@ def Islamic_date(message : Message):
         result = Islamic(message.text)
         bot.reply_to(message , result , reply_markup =date_btn )
         
-      
-bot.polling(
-    skip_pending=True,
-)
+        
+if __name__ == "__main__":
+    import threading
+    threading.Thread(target=bot.infinity_polling, daemon=True).start()
+    run_bot()
+
 
