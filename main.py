@@ -7,6 +7,7 @@ from transmuter import define_calculate
 from transmuter_base import define_calculate_base
 from transmuter_date import Gregorian_date,Persian,Islamic
 import database
+import datetime
 
 
 #load token and use
@@ -70,7 +71,7 @@ def convering(message:Message):
 
     elif message.text == 'Date' :
         if date_btn.keyboard == []:
-            date_btn.add('Gregorian', 'Persian' , 'Islamic' , 'back')
+            date_btn.add('Gregorian', 'Persian' , 'Islamic','Today' , 'back')
         
         bot.send_message(message.chat.id , f'📅 Choose the input calendar' , reply_markup=date_btn)
 
@@ -100,10 +101,18 @@ def convering(message:Message):
         bot.send_message(message.chat.id , 'Enter Date Islamic🌙 :',reply_markup=back_btn) 
         
         bot.register_next_step_handler(message , Islamic_date)
+    elif message.text == 'Today':
+        today = datetime.date.today()
+        
+        date = f'{today.year}-{today.month}-{today.day}'
+        result = Gregorian_date(date)
+        bot.send_message(message.chat.id , result )
         
     elif message.text == 'back':
         bot.delete_message(message.chat.id , message.message_id)
         bot.send_message(message.chat.id , '📍 Main Menu' , reply_markup = key_markup)
+    
+        
     
     else:
         bot.send_message(message.chat.id , f'⚠️ Invalid input type.choose a button')
