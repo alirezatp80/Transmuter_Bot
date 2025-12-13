@@ -34,11 +34,12 @@ def send_message_toall():
             bot.send_message(int(i[0]) ,date_message )
             time.sleep(0.5)
         except Exception as e:
-            print(f'error to send message to {i[0]} \ndescription : {e}')
+            print(f"\033[31merror to send message to {i[0]} \ndescription : {e}\033[0m")
+
             
 
 # هر روز ساعت 09:54:20 پیام ارسال می‌شود
-schedule.every().day.at("10:16:58").do(send_message_toall)
+schedule.every().day.at("5:00:00").do(send_message_toall)
 
 def run_bot():
     while True:
