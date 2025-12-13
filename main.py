@@ -6,6 +6,7 @@ from text import help_unit , help_base , unit_page,base_page
 from transmuter import define_calculate
 from transmuter_base import define_calculate_base
 from transmuter_date import Gregorian_date,Persian,Islamic
+import database
 
 
 #load token and use
@@ -14,6 +15,7 @@ TOKEN = os.getenv('API_TOKEN')
 
 #CREATE BOT API
 bot = telebot.TeleBot(token=TOKEN)
+database.create_user_table()
 
 #button for app
 key_markup = ReplyKeyboardMarkup(resize_keyboard=True,row_width=2 )
@@ -33,6 +35,9 @@ def callback(call):
 
 @bot.message_handler(commands='start')
 def say_hi(message : Message):
+    user = message.from_user
+    if not database.select_user(user.id):
+        database.insert_user(user.id , user.first_name , user.username)
     bot.reply_to(message , 'Hi 👋 Welcome to Transmuter ✨\nHere you can perform any conversion you like 🔄' , reply_markup = key_markup)
     
 
